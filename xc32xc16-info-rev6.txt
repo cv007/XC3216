@@ -33,6 +33,7 @@ ___XC32 specs file contains the 3 lines below___
 *cc1plus:+ -mafrlcsj
 ___3 lines above - not this line________________
 
+
     copy the specs file to the folder that applies-
 
      Linux: /opt/microchip/xc32/VERSION/lib/gcc/
