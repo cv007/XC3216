@@ -36,9 +36,9 @@ ___3 lines above - not this line________________
     copy the specs file to the folder that applies-
 
     ---XC32---
-     Linux: /opt/microchip/xc32/VERSION/lib/gcc/specs
-   Windows: C:\Program Files\Microchip\xc32\VERSION\lib\gcc\specs
-       OSX: /Applications/microchip/xc32/VERSION/lib/gcc/specs
+     Linux: /opt/microchip/xc32/VERSION/lib/gcc/
+   Windows: C:\Program Files\Microchip\xc32\VERSION\lib\gcc\
+       OSX: /Applications/microchip/xc32/VERSION/lib/gcc/
 
 
 ...............................................................................
@@ -61,8 +61,8 @@ ___1 line above - not this line_________________
     copy the specs file to the folder that applies-
 
     ---XC16---
-   Windows: C:\Program Files\Microchip\xc16\VERSION\lib\xc16-specs
-     Linux: /opt/microchip/xc16/VERSION/lib/xc16-specs
-       OSX: /Applications/microchip/xc16/VERSION/lib/xc16-specs
+   Windows: C:\Program Files\Microchip\xc16\VERSION\lib\
+     Linux: /opt/microchip/xc16/VERSION/lib/
+       OSX: /Applications/microchip/xc16/VERSION/lib/
 
 
