@@ -1,0 +1,68 @@
+
+
+        __  __   ___  _   __        __ __  __   ___  _____  ____
+        \ \/ /  / __\/ | / /_      / / \ \/ /  / __\|___ / |___ \
+         \  /  / /   | || '_ \    / /   \  /  / /     |_ \   __) |
+         /  \ / /___ | || (_) |  / /    /  \ / /___  ___) | / __/
+        /_/\_\\____/ |_| \___/  /_/    /_/\_\\____/ |____/ |_____|
+         r e s t r i c t i o n   r e m o v a l            r e v 6
+
+
+
+....eevblog member cv007.......................................................
+
+    rev 6 simple version - no file mods needed, no project options needed
+                           just create one simple file and put it in the
+                           appropriate folder
+
+...............................................................................
+
+        __  __  ___ _________
+        \ \/ / / __\___ /___ \
+         \  / / /    |_ \ __) |
+         /  \/ /___ ___) / __/
+        /_/\_\____/|____/_____|
+
+
+     file name: specs (created by you with text editor)
+
+
+___XC32 specs file contains the 3 lines below___
+*cc1:+ -mafrlcsj
+
+*cc1plus:+ -mafrlcsj
+___3 lines above - not this line________________
+
+    copy the specs file to the folder that applies-
+
+    ---XC32---
+     Linux: /opt/microchip/xc32/VERSION/lib/gcc/specs
+   Windows: C:\Program Files\Microchip\xc32\VERSION\lib\gcc\specs
+       OSX: /Applications/microchip/xc32/VERSION/lib/gcc/specs
+
+
+...............................................................................
+
+        __  __  ___  _  __
+        \ \/ / / __\/ |/ /_
+         \  / / /   | | '_ \
+         /  \/ /___ | | (_) |
+        /_/\_\____/ |_|\___/
+
+
+    file name: xc16-specs (created by you with text editor)
+
+
+___XC16 specs file contains the 1 line below____
+*cc1:+ -mafrlcsj
+___1 line above - not this line_________________
+
+
+    copy the specs file to the folder that applies-
+
+    ---XC16---
+   Windows: C:\Program Files\Microchip\xc16\VERSION\lib\xc16-specs
+     Linux: /opt/microchip/xc16/VERSION/lib/xc16-specs
+       OSX: /Applications/microchip/xc16/VERSION/lib/xc16-specs
+
+
