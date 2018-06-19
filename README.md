@@ -1,6 +1,13 @@
 # XC3216
 GCC compiler restrictions removal
 
+New info-
+
+just use rev 6 info- no file mods needed, no project options needed- just 1 or 3 lines of text in a file placed in a specific folder
+
+
+Old info-
+
 The xc32/xc16 GCC files are licensed under GPL3, which gives you the right to modify these files (source, binary- makes no difference). If you plan to also distribute the modified files (highly unlikely), then additional obligations are added.
 
 Since it is next to impossible (for normal users) to compile the xc16/xc32 gcc compiler from sources MCHP provides, this is the next best thing- either modify the binary files to remove restrictions, or simply add a file and a global option to your project (no modifications needed).
