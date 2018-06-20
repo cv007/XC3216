@@ -100,6 +100,23 @@ File: cc1       Offset: 0x??????  Change: FFFFFFFFFFFFFFFF to 0600000000000000
 File: lto1      Offset: 0x??????  Change: FFFFFFFFFFFFFFFF to 0600000000000000
 
 
+-------------------
+xc32 version 2.10 | - notice now uses 2 instead of 6
+----------------------------------------------------------------------Windows--
+ Dir: C:\Program Files\Microchip\xc32\v2.05\bin\bin\gcc\pic32mx\4.8.3\
+File: cc1plus   Offset: 0x774310  Change: FFFFFFFFFFFFFFFF to 0200000000000000
+File: cc1       Offset: 0x6c3210  Change: FFFFFFFFFFFFFFFF to 0200000000000000
+File: lto1      Offset: 0x664010  Change: FFFFFFFFFFFFFFFF to 0200000000000000
+-------------------------------------------------------------------------Linux-
+ Dir: /opt/microchip/xc32/v2.05/bin/bin/gcc/pic32mx/4.8.3/
+File: cc1plus   Offset: 0xB320B0  Change: FFFFFFFFFFFFFFFF to 0200000000000000
+File: cc1       Offset: 0xA420B0  Change: FFFFFFFFFFFFFFFF to 0200000000000000
+File: lto1      Offset: 0x9B0F70  Change: FFFFFFFFFFFFFFFF to 0200000000000000
+---------------------------------------------------------------------------OSX-
+ Dir: /Applications/microchip/xc32/v2.05/bin/bin/gcc/pic32mx/4.8.3/
+File: cc1plus   Offset: 0x??????  Change: FFFFFFFFFFFFFFFF to 0200000000000000
+File: cc1       Offset: 0x??????  Change: FFFFFFFFFFFFFFFF to 0200000000000000
+File: lto1      Offset: 0x??????  Change: FFFFFFFFFFFFFFFF to 0200000000000000
 
 
 
@@ -186,9 +203,11 @@ for f in cc1plus cc1 lto1; do
 a=($(objdump -T $f | grep mchp_pic32_license_valid))
 b=($(objdump -h $f | grep " .data "))
 offset=$((0X${a[0]}-0x${b[4]}+0x${b[5]}))
+#xc32 < 2.10
+#printf "File: %-8s  Offset: 0x%X  Change: FFFFFFFFFFFFFFFF to 0600000000000000\n" $f $offset
+#xc32 >= 2.10
 printf "File: %-8s  Offset: 0x%X  Change: FFFFFFFFFFFFFFFF to 0600000000000000\n" $f $offset
 done
-
 
 
 #linux script used to change xc32 initial value for 'mchp_pic32_license_valid'
@@ -199,6 +218,9 @@ for f in cc1plus cc1 lto1; do
 a=($(objdump -T $f | grep mchp_pic32_license_valid))
 b=($(objdump -h $f | grep " .data "))
 offset=$((0X${a[0]}-0x${b[4]}+0x${b[5]}))
+#xc32 < 2.10
+#printf "%0.8x: 0600 0000 0000 0000" $offset | xxd -r - $f
+#xc32 >= 2.10
 printf "%0.8x: 0600 0000 0000 0000" $offset | xxd -r - $f
 done
 
@@ -222,8 +244,9 @@ xxd -ps $f.bak | sed "s:$old:$new:" | xxd -r -p - $f
 done
 
 
-Windows process used to find var file offset address to change-
 
+
+Windows process used to find var file offset address to change-
 
 
 using mingw objdump, get disassembly and section info-
@@ -295,7 +318,8 @@ var-section-offset + section-file-offset = var-file-offset
 find that address in the hex editor
 
 should be 6 FF bytes, change first one to 06, the next five to 00
-
+starting at xc32 ver 2.10, use 2 instead
+should be 6 FF bytes, change first one to 02, the next five to 00
 
 do the same procedure for the other two files
 
