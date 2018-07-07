@@ -103,17 +103,17 @@ File: lto1      Offset: 0x??????  Change: FFFFFFFFFFFFFFFF to 0600000000000000
 -------------------
 xc32 version 2.10 | - notice now uses 2 instead of 6
 ----------------------------------------------------------------------Windows--
- Dir: C:\Program Files\Microchip\xc32\v2.05\bin\bin\gcc\pic32mx\4.8.3\
+ Dir: C:\Program Files\Microchip\xc32\v2.10\bin\bin\gcc\pic32mx\4.8.3\
 File: cc1plus   Offset: 0x774310  Change: FFFFFFFFFFFFFFFF to 0200000000000000
 File: cc1       Offset: 0x6c3210  Change: FFFFFFFFFFFFFFFF to 0200000000000000
 File: lto1      Offset: 0x664010  Change: FFFFFFFFFFFFFFFF to 0200000000000000
 -------------------------------------------------------------------------Linux-
- Dir: /opt/microchip/xc32/v2.05/bin/bin/gcc/pic32mx/4.8.3/
+ Dir: /opt/microchip/xc32/v2.10/bin/bin/gcc/pic32mx/4.8.3/
 File: cc1plus   Offset: 0xB320B0  Change: FFFFFFFFFFFFFFFF to 0200000000000000
 File: cc1       Offset: 0xA420B0  Change: FFFFFFFFFFFFFFFF to 0200000000000000
 File: lto1      Offset: 0x9B0F70  Change: FFFFFFFFFFFFFFFF to 0200000000000000
 ---------------------------------------------------------------------------OSX-
- Dir: /Applications/microchip/xc32/v2.05/bin/bin/gcc/pic32mx/4.8.3/
+ Dir: /Applications/microchip/xc32/v2.10/bin/bin/gcc/pic32mx/4.8.3/
 File: cc1plus   Offset: 0x??????  Change: FFFFFFFFFFFFFFFF to 0200000000000000
 File: cc1       Offset: 0x??????  Change: FFFFFFFFFFFFFFFF to 0200000000000000
 File: lto1      Offset: 0x??????  Change: FFFFFFFFFFFFFFFF to 0200000000000000
