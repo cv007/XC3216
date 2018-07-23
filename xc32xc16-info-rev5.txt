@@ -62,6 +62,23 @@ Change: 0x85 to 0x84
 -------------------------------------------------------------------------------
 
 ---------------------
+| xc16 version 1.35 |
+----------------------------------------------------------------------Windows--
+  File: C:\Program Files\Microchip\xc16\v1.35\bin\bin\elf-cc1.exe
+Offset: 0x161FEB
+Change: 0x85 to 0x84
+-------------------------------------------------------------------------Linux-
+  File: /opt/microchip/xc16/v1.35/bin/bin/elf-cc1
+Offset: 0x42B1EB
+Change: 0x85 to 0x84
+---------------------------------------------------------------------------OSX-
+  File: /Applications/microchip/xc16/v1.35/bin/bin/elf-cc1
+Offset: 0x??????
+Change: 0x85 to 0x84
+-------------------------------------------------------------------------------
+
+
+---------------------
 | xc32 version 1.44 |
 ----------------------------------------------------------------------Windows--
  Dir: C:\Program Files\Microchip\xc32\v1.44\bin\bin\gcc\pic32mx\4.8.3\
@@ -104,8 +121,8 @@ File: lto1      Offset: 0x??????  Change: FFFFFFFFFFFFFFFF to 0600000000000000
 xc32 version 2.10 | - notice now uses 2 instead of 6
 ----------------------------------------------------------------------Windows--
  Dir: C:\Program Files\Microchip\xc32\v2.10\bin\bin\gcc\pic32mx\4.8.3\
-File: cc1plus   Offset: 0x774310  Change: FFFFFFFFFFFFFFFF to 0200000000000000
-File: cc1       Offset: 0x6c3210  Change: FFFFFFFFFFFFFFFF to 0200000000000000
+File: cc1plus   Offset: 0x774510  Change: FFFFFFFFFFFFFFFF to 0200000000000000
+File: cc1       Offset: 0x6c3410  Change: FFFFFFFFFFFFFFFF to 0200000000000000
 File: lto1      Offset: 0x664010  Change: FFFFFFFFFFFFFFFF to 0200000000000000
 -------------------------------------------------------------------------Linux-
  Dir: /opt/microchip/xc32/v2.10/bin/bin/gcc/pic32mx/4.8.3/
@@ -174,11 +191,12 @@ provide a specs file that adds to the default specs the -mafrlcsj option
   XC16 C Compiler - run without restrictions
   tested with v1.33 (should also work with ver 1.26,1.30,1.31,1.32B)
   tested with v1.34
+  tested with v1.35
 
   relevant files from the source code-
   v1.33.src/src/XC_GCC/gcc/gcc/config/pic30/pic30.c
   v1.33.src/src/XC_GCC/gcc/gcc/config/pic30/pic30.opt
-  (v1.34- no source provided yet)
+  ...
 ///////////////////////////////////////////////////////////////////////////////
 ****** Simple option, no modification of any files
 
