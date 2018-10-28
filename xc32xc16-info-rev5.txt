@@ -224,7 +224,7 @@ offset=$((0X${a[0]}-0x${b[4]}+0x${b[5]}))
 #xc32 < 2.10
 #printf "File: %-8s  Offset: 0x%X  Change: FFFFFFFFFFFFFFFF to 0600000000000000\n" $f $offset
 #xc32 >= 2.10
-printf "File: %-8s  Offset: 0x%X  Change: FFFFFFFFFFFFFFFF to 0600000000000000\n" $f $offset
+printf "File: %-8s  Offset: 0x%X  Change: FFFFFFFFFFFFFFFF to 0200000000000000\n" $f $offset
 done
 
 
@@ -239,7 +239,7 @@ offset=$((0X${a[0]}-0x${b[4]}+0x${b[5]}))
 #xc32 < 2.10
 #printf "%0.8x: 0600 0000 0000 0000" $offset | xxd -r - $f
 #xc32 >= 2.10
-printf "%0.8x: 0600 0000 0000 0000" $offset | xxd -r - $f
+printf "%0.8x: 0200 0000 0000 0000" $offset | xxd -r - $f
 done
 
 
