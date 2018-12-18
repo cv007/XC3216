@@ -25,14 +25,23 @@
 
 
      file name: specs (created by you with text editor)
-
-
+     
+     --NOTE--
+     Versions 1.xx needed the *ccp1plus spec for c++
+     Versions 2.05 on up no longer requires the *cc1plus spec
+     Versions 2.10 on up (in Windows at least) CANNOT have the *cc1plus spec
+     
+     XC32 VERSIONS 1.xx
 ___XC32 specs file contains the 3 lines below___
 *cc1:+ -mafrlcsj
 
 *cc1plus:+ -mafrlcsj
 ___3 lines above - not this line________________
 
+     XC32 VERSIONS 2.xx
+___XC32 specs file contains the 1 line below___
+*cc1:+ -mafrlcsj
+___1 line above - not this line________________
 
     copy the specs file to the folder that applies-
 
