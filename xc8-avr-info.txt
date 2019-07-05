@@ -113,7 +113,7 @@ done
 #get to a shell prompt, run these three lines
 cd /opt/microchip/xc8/v2.05/avr/libexec/gcc/avr/5.4.0/
 mod(){ dd if=/dev/zero of=$1 bs=1 count=1 seek=$2 conv=notrunc; }
-mod cc1 $((8175220)); mod cc1plus $((9241236)); mod lto1 $((7578832))
+mod cc1 8175220; mod cc1plus 9241236; mod lto1 7578832
 
 
 
