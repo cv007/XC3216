@@ -6,8 +6,6 @@ The Windows version will most likely be quite similar as I assume the same
 gcc compiler is used and will produce similar code- the OSX version, I don't
 know, if they use something other than gcc I would guess it looks quite different.
 
-(update- Windows info at bottom of file)
-
 PLAN A (one plan of many options)- the below code sets 'override' options based on
 license version. We will just make it so the 'nullify' vars are zeroed (so no
 optimization nullification).
@@ -120,6 +118,21 @@ mod cc1 8175220; mod cc1plus 9241236; mod lto1 7578832
 
 
 
+#here are the byte offsets for xc8-avr 2.10 on Linux
+#file    byte offset to change
+#cc1     8195225
+#cc1plus 9261241
+#lto1l   7598505
+
+
+#here is a short version- (no backup is done)
+#get to a shell prompt, run these three lines
+cd /opt/microchip/xc8/v2.10/avr/libexec/gcc/avr/5.4.0/
+mod(){ dd if=/dev/zero of=$1 bs=1 count=1 seek=$2 conv=notrunc; }
+mod cc1 8195225; mod cc1plus 9261241; mod lto1 7598505
+
+
+
 MPLABX - to get C++ capability from XC8-AVR, just add to the build tools
 (the avr binary folder) which then skips using xc8 which does not allow C++
 
@@ -129,20 +142,4 @@ Tools - Options - Embedded - Build Tools -
 
 
 
-Windows- location of files for xc8 2.05-
-C:\Program Files (x86)\Microchip\xc8\v2.05\avr\libexec\gcc\avr\5.4.0
-
-files and offsets-
-cc1plus.exe     0x466EA8
-lto1.exe        0x44C898
-cc1.exe         0x35B678
-
-open file in hex editor (HxD is what I used)
-change the 0x01 to a 0x00 at the offset location
-(change/overwrite this byte only, make sure bytes are not added, 
- some editors will insert bytes)
- 
-can also do a hex search to find the offset (should be the same)-
-89c183f10189c809d085c07418
-and you will see the 01 is the byte we are interested in
 
