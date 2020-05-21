@@ -2,6 +2,67 @@ Here is the info needed to remove restrictions on the GPL licensed XC8-AVR compi
 
 This is done on a Linux pc, so only refers to the Linux version.
 
+
+
+Version 2.20 (they are back to using global variables)
+
+
+change data at file offset specified for the 3 files cc1,cc1plus,lto1
+
+==cc1==
+
+objdump -T cc1 | grep license_valid
+
+00000000017fe880 g    DO .data  0000000000000008  Base        mchp_xccov_license_valid
+00000000017fe878 g    DO .data  0000000000000008  Base        mchp_avr_license_valid
+
+objdump -h cc1 | grep " .data "
+
+25 .data         000086f0  00000000017f6860  00000000017f6860  011f6860  2**5
+
+0x17fe878 - 0x17f6860 = 0x8018  +011f6860 = file offset 0x11fe878 - change FFFFFFFFFFFFFFFF to 0200000000000000
+0x17fe880 - 0x17f6860 = 0x8020  +011f6860 = file offset 0x11fe880 - change FFFFFFFFFFFFFFFF to 0900000000000000
+
+==cc1plus==
+
+objdump -T cc1plus | grep license_valid
+
+0000000001985980 g    DO .data  0000000000000008  Base        mchp_xccov_license_valid
+0000000001985978 g    DO .data  0000000000000008  Base        mchp_avr_license_valid
+
+objdump -h cc1plus | grep " .data "
+
+ 25 .data         000087d0  000000000197d880  000000000197d880  0137d880  2**5
+
+0x1985978 - 0x197d880 = 80F8  +0x137d880 = file offset 0x1385978 - change FFFFFFFFFFFFFFFF to 0200000000000000
+0x1985980 - 0x197d880 = 8100  +0x137d880 = file offset 0x1385980 - change FFFFFFFFFFFFFFFF to 0900000000000000
+
+==lto1==
+
+objdump -T lto1 | grep license_valid
+
+0000000001713660 g    DO .data  0000000000000008  Base        mchp_xccov_license_valid
+0000000001713658 g    DO .data  0000000000000008  Base        mchp_avr_license_valid
+
+
+objdump -h cc1plus | grep " .data "
+
+25 .data         000083d0  000000000170b960  000000000170b960  0110b960  2**5
+
+
+0x1713658 - 0x170b960 = 7CF8  +0x110b960 = file offset 0x1113658 - change FFFFFFFFFFFFFFFF to 0200000000000000
+0x1713660 - 0x170b960 = 7D00  +0x110b960 = file offset 0x1113660 - change FFFFFFFFFFFFFFFF to 0900000000000000
+
+
+
+
+
+
+Older versions-
+
+
+
+
 The Windows version will most likely be quite similar as I assume the same
 gcc compiler is used and will produce similar code- the OSX version, I don't
 know, if they use something other than gcc I would guess it looks quite different.
