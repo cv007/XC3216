@@ -45,7 +45,7 @@ objdump -T lto1 | grep license_valid
 0000000001713658 g    DO .data  0000000000000008  Base        mchp_avr_license_valid
 
 
-objdump -h cc1plus | grep " .data "
+objdump -h lto1 | grep " .data "
 
 25 .data         000083d0  000000000170b960  000000000170b960  0110b960  2**5
 
