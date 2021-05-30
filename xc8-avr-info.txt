@@ -2,8 +2,6 @@ Here is the info needed to remove restrictions on the GPL licensed XC8-AVR compi
 
 This is done on a Linux pc, so only refers to the Linux version.
 
-Version 2.20 (they are back to using global variables)
-
 
 change data at file offset specified for the 3 files cc1,cc1plus,lto1
 
@@ -12,6 +10,10 @@ is used to figure out where the vars are located in the file-
 virtual var address - virtual section base address + section file offset = var file offset
 
 The vars and what they do can be found in the gpl source code available from microchip.
+
+This example is for version 2.20 and and the same method will work for later versions also (until they
+change their methods). Earlier versions did not use global variables so another method was used which 
+was a little more difficult as you needed to modify the code instead.
 
 ==cc1==
 
