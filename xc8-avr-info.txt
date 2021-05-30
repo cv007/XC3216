@@ -2,12 +2,16 @@ Here is the info needed to remove restrictions on the GPL licensed XC8-AVR compi
 
 This is done on a Linux pc, so only refers to the Linux version.
 
-
-
 Version 2.20 (they are back to using global variables)
 
 
 change data at file offset specified for the 3 files cc1,cc1plus,lto1
+
+objdump will show the global var virtual addresses, and the .data section virtual address
+is used to figure out where the vars are located in the file-
+virtual var address - virtual section base address + section file offset = var file offset
+
+The vars and what they do can be found in the gpl source code available from microchip.
 
 ==cc1==
 
@@ -20,8 +24,11 @@ objdump -h cc1 | grep " .data "
 
 25 .data         000086f0  00000000017f6860  00000000017f6860  011f6860  2**5
 
+cc1-
 0x17fe878 - 0x17f6860 = 0x8018  +011f6860 = file offset 0x11fe878 - change FFFFFFFFFFFFFFFF to 0200000000000000
 0x17fe880 - 0x17f6860 = 0x8020  +011f6860 = file offset 0x11fe880 - change FFFFFFFFFFFFFFFF to 0900000000000000
+
+
 
 ==cc1plus==
 
@@ -34,8 +41,11 @@ objdump -h cc1plus | grep " .data "
 
  25 .data         000087d0  000000000197d880  000000000197d880  0137d880  2**5
 
+cc1plus-
 0x1985978 - 0x197d880 = 80F8  +0x137d880 = file offset 0x1385978 - change FFFFFFFFFFFFFFFF to 0200000000000000
 0x1985980 - 0x197d880 = 8100  +0x137d880 = file offset 0x1385980 - change FFFFFFFFFFFFFFFF to 0900000000000000
+
+
 
 ==lto1==
 
@@ -49,158 +59,8 @@ objdump -h lto1 | grep " .data "
 
 25 .data         000083d0  000000000170b960  000000000170b960  0110b960  2**5
 
-
+lto1-
 0x1713658 - 0x170b960 = 7CF8  +0x110b960 = file offset 0x1113658 - change FFFFFFFFFFFFFFFF to 0200000000000000
 0x1713660 - 0x170b960 = 7D00  +0x110b960 = file offset 0x1113660 - change FFFFFFFFFFFFFFFF to 0900000000000000
-
-
-
-
-
-
-Older versions-
-
-
-
-
-The Windows version will most likely be quite similar as I assume the same
-gcc compiler is used and will produce similar code- the OSX version, I don't
-know, if they use something other than gcc I would guess it looks quite different.
-
-PLAN A (one plan of many options)- the below code sets 'override' options based on
-license version. We will just make it so the 'nullify' vars are zeroed (so no
-optimization nullification).
-
-When the license version is tested in the below code, it uses xor to test the value.
-The Free license value is 0. The first test is for the Standard license (1),
-0 xor 1 = 1 , since the result is not 0, there was no match. We will change the xor
-value from 1 to 0. Now we get 0 xor 0 , the result is 0 so there was a match (we have
-a Standard license). When there is a match (result is 0), the nullification options
-are zeroed. (Pro and Standard are the same for xc8-avr).
-
-The sequence of code bytes is below-
-    89c183f10189c809d085c07418
-so we only need to search for it in the binary, replace the 01 with 00, and we are done.
-(In the Linux version at least, this sequence only occurs one time)
-
-
-
-//from XC8-AVR GCC sources (2.05)
-//mchp-license-manager.c
-
-void avr_override_licensed_options (void)
-{
-  ...
-
-  if ((mchp_avr_license_valid == AVR_VALID_STANDARD_LICENSE) ||
-      (mchp_avr_license_valid == AVR_VALID_PRO_LICENSE))
-  {
-    nullify_lto = nullify_O3 = nullify_Os = 0;
-  }
-
-  ...
-
-looking for this sequence
-          |
- 8813e65: | a1 30 ed f8 08       mov    0x8f8ed30,%eax
- 8813e6a: | 8b 15 34 ed f8 08    mov    0x8f8ed34,%edx                  0=FREE,1=STANDARD,2=PRO
-          |
- 8813e70: > 89 c1                mov    %eax,%ecx                       ecx = license# 0 1 2
- 8813e72: > 83 f1 01             xor    $0x1,%ecx   change $0x1->$0x0   ecx ^ 1 , 0=1,1=0,2=3
- 8813e75: > 89 c8                mov    %ecx,%eax                       eax = ecx
- 8813e77: > 09 d0                or     %edx,%eax
- 8813e79: > 85 c0                test   %eax,%eax                       so eax is 0, and the je is taken
- 8813e7b: > 74 18                je     8813e95 <ftell@plt+0x7c79d5>    (could also change to jne instead
-                                                                         but I wanted to use /dev/zero :)
-  8813e7d:	a1 30 ed f8 08       mov    0x8f8ed30,%eax
- 8813e82:	8b 15 34 ed f8 08    mov    0x8f8ed34,%edx
- 8813e88:	89 c1                mov    %eax,%ecx
- 8813e8a:	83 f1 02             xor    $0x2,%ecx                       now checking for PRO
- 8813e8d:	89 c8                mov    %ecx,%eax                       (could also change this one instead)
- 8813e8f:	09 d0                or     %edx,%eax                       (makes no difference)
- 8813e91:	85 c0                test   %eax,%eax
- 8813e93:	75 1e                jne    8813eb3 <ftell@plt+0x7c79f3>
- 8813e95:	c7 05 b8 9f fd 08 00 movl   $0x0,0x8fd9fb8                  nullify_?? = 0
- 8813e9c:	00 00 00
- 8813e9f:	a1 b8 9f fd 08       mov    0x8fd9fb8,%eax
- 8813ea4:	a3 bc 9f fd 08       mov    %eax,0x8fd9fbc                  nullify_?? = 0
- 8813ea9:	a1 bc 9f fd 08       mov    0x8fd9fbc,%eax
- 8813eae:	a3 c0 9f fd 08       mov    %eax,0x8fd9fc0                  nullify_?? = 0
- 8813eb3:	e8 15 fc ff ff       call   8813acd <ftell@plt+0x7c760d>
-
-
-
-#Now, to make the changes- (a shorter version is at the end)
-
-#get to a shell prompt
-
-#change to binary directory (this is xc8 v2.05 in Linux)
-cd /opt/microchip/xc8/v2.05/avr/libexec/gcc/avr/5.4.0/
-
-#create a mod function
-mod(){ dd if=/dev/zero of=$1 bs=1 count=1 seek=$2 conv=notrunc; }
-
-#this is the binary sequence we are looking for
-#89c183f10189c809d085c07418
-
-#make a file for this pattern for grep to use
-printf "\x89\xc1\x83\xf1\x01\x89\xc8\x09\xd0\x85\xc0\x74\x18" > pattern.bin
-
-#mod each file (make backup copy if not already done)
-for f in cc1 cc1plus lto1; do
-  #make backup copy if not already done
-  [ -e $f.original ] || cp $f $f.original
-  #get the offset
-  offset=$(grep -abo -f pattern.bin $f)
-  #remove the match data, the byte offset + 4 is the 01 we want
-  offset=$(( ${offset%%:*} + 4 ))
-  [ $offset -ne 4 ] && mod $f $offset #if valid offset, do it
-done
-
-#you are now done
-
-
-
-
-
-#here are the byte offsets for xc8-avr 2.05 on Linux
-#file    byte offset to change
-#cc1     8175220
-#cc1plus 9241236
-#lto1l   7578832
-
-
-#here is a short version- (no backup is done)
-#get to a shell prompt, run these three lines
-cd /opt/microchip/xc8/v2.05/avr/libexec/gcc/avr/5.4.0/
-mod(){ dd if=/dev/zero of=$1 bs=1 count=1 seek=$2 conv=notrunc; }
-mod cc1 8175220; mod cc1plus 9241236; mod lto1 7578832
-
-
-
-
-#here are the byte offsets for xc8-avr 2.10 on Linux
-#file    byte offset to change
-#cc1     8195225
-#cc1plus 9261241
-#lto1l   7598505
-
-
-#here is a short version- (no backup is done)
-#get to a shell prompt, run these three lines
-cd /opt/microchip/xc8/v2.10/avr/libexec/gcc/avr/5.4.0/
-mod(){ dd if=/dev/zero of=$1 bs=1 count=1 seek=$2 conv=notrunc; }
-mod cc1 8195225; mod cc1plus 9261241; mod lto1 7598505
-
-
-
-MPLABX - to get C++ capability from XC8-AVR, just add to the build tools
-(the avr binary folder) which then skips using xc8 which does not allow C++
-
-Tools - Options - Embedded - Build Tools -
-    Add
-    set Base Directory to->  /opt/microchip/xc8/v2.05/avr/bin
-
-
 
 
