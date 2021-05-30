@@ -31,6 +31,10 @@
      Versions 2.05 on up no longer requires the *cc1plus spec
      Versions 2.10 on up (in Windows at least) CANNOT have the *cc1plus spec
      
+     !! xc32 for ARM - cannot use this specs file, but can add the -mafrlcsj option like you
+                       would normally do for gcc options (the option will not be removed like
+                       it is for xc32-pic32, which is why the specs file is being used)
+     
      XC32 VERSIONS 1.xx
 ___XC32 specs file contains the 3 lines below___
 *cc1:+ -mafrlcsj
