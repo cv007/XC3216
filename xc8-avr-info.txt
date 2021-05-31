@@ -66,3 +66,13 @@ lto1-
 0x1713660 - 0x170b960 = 7D00  +0x110b960 = file offset 0x1113660 - change FFFFFFFFFFFFFFFF to 0900000000000000
 
 
+
+Version 2.31 - Windows
+
+from FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF FF
+to   02 00 00 00 00 00 00 00 09 00 00 00 00 00 00 00
+file        offset
+cc1.exe     0xC98648
+cc1plus.exe 0xDC03A8
+lto1.exe    0xC10CA8
+
